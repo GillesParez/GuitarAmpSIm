@@ -62,8 +62,9 @@ public:
     float getRmsValue(const int channel) const;
 private:
     
-    ScopedPointer<AudioProcessorValueTreeState> state;
     
+    ScopedPointer<AudioProcessorValueTreeState> state;
+
     float rmsLevelLeft, rmsLevelRight;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleGuitarAmpSimAudioProcessor)

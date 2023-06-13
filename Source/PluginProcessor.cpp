@@ -25,15 +25,16 @@ SimpleGuitarAmpSimAudioProcessor::SimpleGuitarAmpSimAudioProcessor()
     
     state = new AudioProcessorValueTreeState(*this,nullptr);
 
-    state->createAndAddParameter("drive", "Drive", "Drive", NormalisableRange<float>(0.f, 100.f, 0.001), 1.f, nullptr, nullptr);
-    state->createAndAddParameter("range", "Range", "Range", NormalisableRange<float>(0.f, 1.f, 0.001), 0, nullptr, nullptr);
-    state->createAndAddParameter("blend", "Blend", "Blend", NormalisableRange<float>(0.f, 1.f, 0.001), 1.0f, nullptr, nullptr);
-    state->createAndAddParameter("volume", "Volume", "Volume", NormalisableRange<float>(0.f, 1.f, 0.001), 0.33f, nullptr, nullptr);
+    state->createAndAddParameter("drive", "Drive", "Drive", NormalisableRange<float>(0.f, 50.f, 0.001), 0.2f, nullptr, nullptr);
+    state->createAndAddParameter("range", "Range", "Range", NormalisableRange<float>(0.f, 1.f, 0.001), 0.9f, nullptr, nullptr);
+    state->createAndAddParameter("blend", "Blend", "Blend", NormalisableRange<float>(0.01, 1.f, 0.001), 0.5f, nullptr, nullptr);
+    state->createAndAddParameter("volume", "Volume", "Volume", NormalisableRange<float>(0.f, 1.f, 0.001), 0.5f, nullptr, nullptr);
 
     state->state = ValueTree("drive");
     state->state = ValueTree("range");
     state->state = ValueTree("blend");
     state->state = ValueTree("volume");
+
 
 
 }
@@ -109,6 +110,8 @@ void SimpleGuitarAmpSimAudioProcessor::prepareToPlay (double sampleRate, int sam
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+
+   
 }
 
 void SimpleGuitarAmpSimAudioProcessor::releaseResources()
@@ -175,12 +178,16 @@ void SimpleGuitarAmpSimAudioProcessor::processBlock (juce::AudioBuffer<float>& b
     float range = *state->getRawParameterValue("range");
     float blend = *state->getRawParameterValue("blend");
     float volume = *state->getRawParameterValue("volume");
+    
 
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
 
+        
         // ..do something to the data...
+
+       
 
         for (int  sample = 0; sample < buffer.getNumSamples(); sample++)
         {
@@ -198,6 +205,8 @@ void SimpleGuitarAmpSimAudioProcessor::processBlock (juce::AudioBuffer<float>& b
 
     }
 }
+
+
 
 //==============================================================================
 bool SimpleGuitarAmpSimAudioProcessor::hasEditor() const
